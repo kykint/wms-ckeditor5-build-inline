@@ -24,7 +24,7 @@ module.exports = {
 		library: 'InlineEditor',
 
 		path: path.resolve( __dirname, 'build' ),
-		filename: 'ckeditor.js',
+		filename: 'ckeditor-inline.js',
 		libraryTarget: 'umd',
 		libraryExport: 'default'
 	},
@@ -32,7 +32,7 @@ module.exports = {
 	optimization: {
 		minimizer: [
 			new TerserPlugin( {
-				sourceMap: true,
+				// sourceMap: true,
 				terserOptions: {
 					output: {
 						// Preserve CKEditor 5 license comments.
@@ -48,8 +48,8 @@ module.exports = {
 		new CKEditorWebpackPlugin( {
 			// UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
 			// When changing the built-in language, remember to also change it in the editor's configuration (src/ckeditor.js).
-			language: 'en',
-			additionalLanguages: 'all'
+			language: 'ru'
+			// additionalLanguages: 'all'
 		} ),
 		new webpack.BannerPlugin( {
 			banner: bundler.getLicenseBanner(),

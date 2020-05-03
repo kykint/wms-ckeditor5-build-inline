@@ -100,6 +100,6 @@ InlineEditor.defaultConfig = {
 };
 {
 	// eslint-disable-next-line no-undef
-	const t = window.CKEDITOR_TRANSLATIONS = window.CKEDITOR_TRANSLATIONS || {};
-	t[ 'Special characters' ] = 'Спецсимволы';
+	const dictionary = window.CKEDITOR_TRANSLATIONS.ru.dictionary;
+	dictionary[ 'Special characters' ] = 'Спецсимволы';
 }

@@ -98,3 +98,8 @@ InlineEditor.defaultConfig = {
 	// This value must be kept in sync with the language defined in webpack.config.js.
 	language: 'ru'
 };
+{
+	// eslint-disable-next-line no-undef
+	const t = window.CKEDITOR_TRANSLATIONS = window.CKEDITOR_TRANSLATIONS || {};
+	t[ 'Special characters' ] = 'Спецсимволы';
+}

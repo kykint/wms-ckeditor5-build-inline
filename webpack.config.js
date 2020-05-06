@@ -52,7 +52,7 @@ module.exports = {
 			// additionalLanguages: 'all'
 		} ),
 		new webpack.BannerPlugin( {
-			banner: bundler.getLicenseBanner(),
+			banner: '/*!@ignore*/' + bundler.getLicenseBanner(),
 			raw: true
 		} )
 	],

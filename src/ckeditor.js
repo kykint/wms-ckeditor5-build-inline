@@ -17,6 +17,8 @@ import imageIcon from './archive.svg';
 import { addListToDropdown, createDropdown } from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
 import Collection from '@ckeditor/ckeditor5-utils/src/collection';
 import Model from '@ckeditor/ckeditor5-ui/src/model';
+import Link from '@ckeditor/ckeditor5-link/src/link';
+import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
 
 class TemplatesDropdown extends Plugin {
 	init() {
@@ -61,10 +63,12 @@ export default class InlineEditor extends InlineEditorBase {
 // Plugins to include in the build.
 InlineEditor.builtinPlugins = [
 	Autoformat,
+	AutoLink,
 	Bold,
 	Italic,
 	Alignment,
 	HorizontalLine,
+	Link,
 	PageBreak,
 	SpecialCharacters,
 	SpecialCharactersEssentials,
@@ -91,6 +95,7 @@ InlineEditor.defaultConfig = {
 			'|',
 			'alignment',
 			'specialCharacters',
+			'link',
 			'horizontalLine',
 			'pageBreak'
 		]

@@ -3,7 +3,7 @@ import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+// import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak';
@@ -19,6 +19,8 @@ import Collection from '@ckeditor/ckeditor5-utils/src/collection';
 import Model from '@ckeditor/ckeditor5-ui/src/model';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
+import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
+import Heading from '@ckeditor/ckeditor5-heading/src/heading';
 
 class TemplatesDropdown extends Plugin {
 	init() {
@@ -76,8 +78,10 @@ InlineEditor.builtinPlugins = [
 	Superscript,
 	Underline,
 	Essentials,
-	Paragraph,
-	TemplatesDropdown
+	// Paragraph,
+	TemplatesDropdown,
+	FontSize,
+	Heading
 ];
 
 // Editor configuration.
@@ -86,6 +90,9 @@ InlineEditor.defaultConfig = {
 		items: [
 			'undo',
 			'redo',
+			'|',
+			'heading',
+			'fontSize',
 			'|',
 			'bold',
 			'italic',
@@ -101,5 +108,10 @@ InlineEditor.defaultConfig = {
 		]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
-	language: 'ru'
+	language: 'ru',
+	fontSize: {
+		options: [
+			8, 10, 12, 14, 'default', 18, 20, 24, 28
+		]
+	}
 };

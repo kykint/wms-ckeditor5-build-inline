@@ -21,6 +21,8 @@ import Link from '@ckeditor/ckeditor5-link/src/link';
 import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
 import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading';
+import Indent from '@ckeditor/ckeditor5-indent/src/indent';
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 
 class TemplatesDropdown extends Plugin {
 	init() {
@@ -59,6 +61,42 @@ class TemplatesDropdown extends Plugin {
 	}
 }
 
+class IndentBlockFixed extends IndentBlock {
+	/**
+	 * Setups conversion for using offset indents.
+	 *
+	 * @private
+	 */
+	_setupConversionUsingOffset() {
+		const conversion = this.editor.conversion;
+		const marginProperty = 'text-indent'; // единственное изменение
+
+		conversion.for( 'upcast' ).attributeToAttribute( {
+			view: {
+				styles: {
+					[ marginProperty ]: /[\s\S]+/
+				}
+			},
+			model: {
+				key: 'blockIndent',
+				value: viewElement => viewElement.getStyle( marginProperty )
+			}
+		} );
+
+		conversion.for( 'downcast' ).attributeToAttribute( {
+			model: 'blockIndent',
+			view: modelAttributeValue => {
+				return {
+					key: 'style',
+					value: {
+						[ marginProperty ]: modelAttributeValue
+					}
+				};
+			}
+		} );
+	}
+}
+
 export default class InlineEditor extends InlineEditorBase {
 }
 
@@ -67,6 +105,8 @@ InlineEditor.builtinPlugins = [
 	Autoformat,
 	AutoLink,
 	Bold,
+	Indent,
+	IndentBlockFixed,
 	Italic,
 	Alignment,
 	HorizontalLine,
@@ -99,6 +139,9 @@ InlineEditor.defaultConfig = {
 			'underline',
 			'subscript',
 			'superscript',
+			'|',
+			'indent',
+			'outdent',
 			'|',
 			'alignment',
 			'specialCharacters',

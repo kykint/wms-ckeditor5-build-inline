@@ -12,6 +12,7 @@ import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
+import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import imageIcon from './archive.svg';
 import { addListToDropdown, createDropdown } from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
@@ -117,6 +118,7 @@ InlineEditor.builtinPlugins = [
 	Subscript,
 	Superscript,
 	Underline,
+	FontColor,
 	Essentials,
 	// Paragraph,
 	TemplatesDropdown,
@@ -133,6 +135,7 @@ InlineEditor.defaultConfig = {
 			'|',
 			'heading',
 			'fontSize',
+			'fontColor',
 			'|',
 			'bold',
 			'italic',

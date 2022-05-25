@@ -44,6 +44,12 @@ module.exports = {
 		]
 	},
 
+	resolve: {
+		alias: {
+			'ckeditor5-exports': path.resolve(__dirname, 'src/exports')
+		}
+	},
+
 	plugins: [
 		new CKEditorWebpackPlugin( {
 			// UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
@@ -64,7 +70,7 @@ module.exports = {
 				use: [ 'raw-loader' ]
 			},
 			{
-				test: /\.css$/,
+				test: /(\.css|.vanilla-css)$/,
 				use: [
 					{
 						loader: 'style-loader',

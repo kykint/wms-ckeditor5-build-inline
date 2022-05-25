@@ -24,6 +24,18 @@ import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
+import HyphensFactory from 'hyphens/Resources/Private/Scripts/HyphensEditor/src/plugins/hyphens';
+
+class HyphensPlugin extends HyphensFactory({}) {
+	init() {
+		super.init();
+		const {editor} = this;
+		editor.keystrokes.set('CTRL+SHIFT+Space', 'insertNbspEntity');
+		editor.keystrokes.set('CTRL+Space', 'insertNbspEntity');
+		editor.keystrokes.set('CTRL+SHIFT+ALT+Space', 'insertShyEntity');
+		editor.keystrokes.set('CTRL+ALT+Space', 'insertShyEntity');
+	}
+}
 
 class TemplatesDropdown extends Plugin {
 	init() {
@@ -123,7 +135,8 @@ InlineEditor.builtinPlugins = [
 	// Paragraph,
 	TemplatesDropdown,
 	FontSize,
-	Heading
+	Heading,
+	HyphensPlugin
 ];
 
 // Editor configuration.

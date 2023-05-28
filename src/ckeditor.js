@@ -15,7 +15,7 @@ import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
 import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
 import imageIcon from './archive.svg';
-import { addListToDropdown, createDropdown } from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
+import {addListToDropdown, createDropdown} from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
 import Collection from '@ckeditor/ckeditor5-utils/src/collection';
 import Model from '@ckeditor/ckeditor5-ui/src/model';
 import Link from '@ckeditor/ckeditor5-link/src/link';
@@ -25,6 +25,8 @@ import Heading from '@ckeditor/ckeditor5-heading/src/heading';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import HyphensFactory from 'hyphens/Resources/Private/Scripts/HyphensEditor/src/plugins/hyphens';
+
+const INSERT_TEMPLATE_TITLE = 'Insert template';
 
 class HyphensPlugin extends HyphensFactory({}) {
 	init() {
@@ -40,37 +42,37 @@ class HyphensPlugin extends HyphensFactory({}) {
 class TemplatesDropdown extends Plugin {
 	init() {
 		const editor = this.editor;
-		editor.ui.componentFactory.add( 'templateDropdown', locale => {
-			const dropdownView = createDropdown( locale );
-			dropdownView.buttonView.set( {
-				label: 'Вставить шаблон',
+		editor.ui.componentFactory.add('templateDropdown', locale => {
+			const dropdownView = createDropdown(locale);
+			dropdownView.buttonView.set({
+				label: locale.t(INSERT_TEMPLATE_TITLE),
 				icon: imageIcon,
 				tooltip: true
-			} );
+			});
 			const items = new Collection();
 
-			const values = editor.config.get( 'templateDropdownValues' );
-			if ( values ) {
-				for ( const value of values ) {
-					items.add( {
+			const values = editor.config.get('templateDropdownValues');
+			if (values) {
+				for (const value of values) {
+					items.add({
 						type: 'button',
-						model: new Model( {
+						model: new Model({
 							withText: true,
 							label: value.name,
 							pasteText: value.text
-						} )
-					} );
+						})
+					});
 				}
 			}
-			dropdownView.on( 'execute', function( data ) {
-				const viewFragment = editor.data.processor.toView( data.source.pasteText );
-				const modelFragment = editor.data.toModel( viewFragment );
-				editor.model.insertContent( modelFragment, editor.model.document.selection );
-			} );
+			dropdownView.on('execute', function (data) {
+				const viewFragment = editor.data.processor.toView(data.source.pasteText);
+				const modelFragment = editor.data.toModel(viewFragment);
+				editor.model.insertContent(modelFragment, editor.model.document.selection);
+			});
 
-			addListToDropdown( dropdownView, items );
+			addListToDropdown(dropdownView, items);
 			return dropdownView;
-		} );
+		});
 	}
 }
 
@@ -84,29 +86,29 @@ class IndentBlockFixed extends IndentBlock {
 		const conversion = this.editor.conversion;
 		const marginProperty = 'text-indent'; // единственное изменение
 
-		conversion.for( 'upcast' ).attributeToAttribute( {
+		conversion.for('upcast').attributeToAttribute({
 			view: {
 				styles: {
-					[ marginProperty ]: /[\s\S]+/
+					[marginProperty]: /[\s\S]+/
 				}
 			},
 			model: {
 				key: 'blockIndent',
-				value: viewElement => viewElement.getStyle( marginProperty )
+				value: viewElement => viewElement.getStyle(marginProperty)
 			}
-		} );
+		});
 
-		conversion.for( 'downcast' ).attributeToAttribute( {
+		conversion.for('downcast').attributeToAttribute({
 			model: 'blockIndent',
 			view: modelAttributeValue => {
 				return {
 					key: 'style',
 					value: {
-						[ marginProperty ]: modelAttributeValue
+						[marginProperty]: modelAttributeValue
 					}
 				};
 			}
-		} );
+		});
 	}
 }
 
@@ -174,3 +176,11 @@ InlineEditor.defaultConfig = {
 		]
 	}
 };
+
+const t = window.CKEDITOR_TRANSLATIONS = window.CKEDITOR_TRANSLATIONS || {};
+t.ru = t.ru || {dictionary: {}};
+t.en = t.en || {dictionary: {}};
+t.lt = t.lt || {dictionary: {}};
+t.ru.dictionary[INSERT_TEMPLATE_TITLE] = 'Вставить шаблон';
+t.en.dictionary[INSERT_TEMPLATE_TITLE] = 'Insert template';
+t.lt.dictionary[INSERT_TEMPLATE_TITLE] = 'Įterpti šabloną';

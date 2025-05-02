@@ -1,42 +1,28 @@
-import InlineEditorBase from '@ckeditor/ckeditor5-editor-inline/src/inlineeditor';
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
-// import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
-import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak';
-import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
-import SpecialCharactersEssentials from '@ckeditor/ckeditor5-special-characters/src/specialcharactersessentials';
-import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
-import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
-import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
-import FontColor from '@ckeditor/ckeditor5-font/src/fontcolor';
-import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
+import {InlineEditor as InlineEditorBase} from '@ckeditor/ckeditor5-editor-inline';
+import {Essentials} from '@ckeditor/ckeditor5-essentials';
+import {Autoformat} from '@ckeditor/ckeditor5-autoformat';
+import {Bold, Italic, Subscript, Superscript, Underline} from '@ckeditor/ckeditor5-basic-styles';
+import {HorizontalLine} from '@ckeditor/ckeditor5-horizontal-line';
+import {Alignment} from '@ckeditor/ckeditor5-alignment';
+import {PageBreak} from '@ckeditor/ckeditor5-page-break';
+import {SpecialCharacters, SpecialCharactersEssentials} from '@ckeditor/ckeditor5-special-characters';
+import {FontColor, FontSize} from '@ckeditor/ckeditor5-font';
+import {Plugin} from '@ckeditor/ckeditor5-core';
+import {Collection} from '@ckeditor/ckeditor5-utils';
+import {ViewModel, addListToDropdown, createDropdown} from '@ckeditor/ckeditor5-ui';
+import {AutoLink, Link} from '@ckeditor/ckeditor5-link';
+import {Heading} from '@ckeditor/ckeditor5-heading';
+import {Indent, IndentBlock} from '@ckeditor/ckeditor5-indent';
 import imageIcon from './archive.svg';
-import {addListToDropdown, createDropdown} from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
-import Collection from '@ckeditor/ckeditor5-utils/src/collection';
-import Model from '@ckeditor/ckeditor5-ui/src/model';
-import Link from '@ckeditor/ckeditor5-link/src/link';
-import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
-import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
-import Heading from '@ckeditor/ckeditor5-heading/src/heading';
-import Indent from '@ckeditor/ckeditor5-indent/src/indent';
-import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 import HyphensFactory from 'hyphens/Resources/Private/Scripts/HyphensEditor/src/plugins/hyphens';
 
 const INSERT_TEMPLATE_TITLE = 'Insert template';
 
-class HyphensPlugin extends HyphensFactory({}) {
-	init() {
-		super.init();
-		const {editor} = this;
-		editor.keystrokes.set('CTRL+SHIFT+Space', 'insertNbspEntity');
-		editor.keystrokes.set('CTRL+Space', 'insertNbspEntity');
-		editor.keystrokes.set('CTRL+SHIFT+ALT+Space', 'insertShyEntity');
-		editor.keystrokes.set('CTRL+ALT+Space', 'insertShyEntity');
-	}
+function HyphensPlugin(editor) {
+	editor.keystrokes.set('CTRL+SHIFT+Space', 'insertNbspEntity');
+	editor.keystrokes.set('CTRL+Space', 'insertNbspEntity');
+	editor.keystrokes.set('CTRL+SHIFT+ALT+Space', 'insertShyEntity');
+	editor.keystrokes.set('CTRL+ALT+Space', 'insertShyEntity');
 }
 
 class TemplatesDropdown extends Plugin {
@@ -56,7 +42,7 @@ class TemplatesDropdown extends Plugin {
 				for (const value of values) {
 					items.add({
 						type: 'button',
-						model: new Model({
+						model: new ViewModel({
 							withText: true,
 							label: value.name,
 							pasteText: value.text
@@ -138,6 +124,7 @@ InlineEditor.builtinPlugins = [
 	TemplatesDropdown,
 	FontSize,
 	Heading,
+	HyphensFactory({}),
 	HyphensPlugin
 ];
 
@@ -170,6 +157,7 @@ InlineEditor.defaultConfig = {
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
 	language: 'ru',
+	licenseKey: 'GPL',
 	fontSize: {
 		options: [
 			8, 10, 12, 14, 'default', 18, 20, 24, 28
